@@ -18,7 +18,7 @@ def rand_crop(data, label, img_h, img_w):
     label = label.crop((width1, height1, width2, height2))
     return data,label
 
-class GoProDataset(Dateset):
+class GoProDataset(Dataset):
     def __init__(self, path, mode='train'):
         super(self).__init__()
         self.inputs = []

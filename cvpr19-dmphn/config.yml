@@ -1,0 +1,13 @@
+# training parameter
+epoch: 3000
+lr: 1e-4
+decay_rate: 0.1
+batch_size: 6
+solver: 'adam'
+device: 'cuda:0'
+
+# other settings
+model_path: 'none'
+data_path: '/home/kxp/data/gopro/'
+save_path: '/home/kxp/workspace/deblur-projects/cvpr19-dmphn/checkpoints/'
+save_name: '001_lr_1e-4_deblur.pth'

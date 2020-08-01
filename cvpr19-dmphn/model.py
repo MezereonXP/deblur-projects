@@ -32,7 +32,7 @@ class DMPHNModel(nn.Module):
                     tmp_feature.append(self.encoder4(rs[j]))  # each feature is [B, H, W, C=128]
                 # combine the output
                 tmp_feature = self.combine(tmp_feature, comb_dim=3)
-                for j in range(num_parts/2):
+                for j in range(int(num_parts/2)):
                     tmp_out.append(self.decoder4(tmp_feature[j]))
             elif currentlevel == 2:
                 rs = self.divide(x, 2, 2)

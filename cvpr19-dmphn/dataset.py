@@ -20,7 +20,7 @@ def rand_crop(data, label, img_h, img_w):
 
 class GoProDataset(Dataset):
     def __init__(self, path, mode='train'):
-        super(self).__init__()
+        super(GoProDataset).__init__()
         self.inputs = []
         self.targets = []
         self.transform = my_transform

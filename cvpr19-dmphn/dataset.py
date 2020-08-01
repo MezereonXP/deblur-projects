@@ -2,6 +2,7 @@ from torch.utils.data import Dataset
 from PIL import Image
 import os
 import torchvision.transforms as transforms
+import random
 
 my_transform = transforms.Compose([
                     # transforms.RandomCrop((256,256)),     

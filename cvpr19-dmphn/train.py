@@ -15,7 +15,7 @@ from tensorboardX import SummaryWriter
 
 def run():
     # Load the config file
-    f = open('./cvpr19-dmphn/config.yml')
+    f = open('./config.yml')
     config = edict(yaml.load(f))
     print("The config:")
     print(config)

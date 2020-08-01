@@ -58,6 +58,7 @@ def run():
             batch_x, batch_y = batch_x.to(device), batch_y.to(device)
             optimizer.zero_grad()
             # forward
+            print(batch_x.shape)
             batch_out = model(batch_x)
             loss = mse_loss(batch_out, batch_y)
             # backward

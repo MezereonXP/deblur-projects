@@ -5,12 +5,12 @@ from encoder import Encoder
 class DMPHNModel(nn.Module):
     def __init__(self, level=4, device='cuda'):
         super(DMPHNModel, self).__init__()
-        self.encoders = []
-        self.decoders = []
+        self.encoders = nn.ModuleList()
+        self.decoders = nn.ModuleList()
         self.level = level
         for i in range(level):
-            self.encoders.append(Encoder().to(device))
-            self.decoders.append(Decoder().to(device))
+            self.encoders.add_module(Encoder().to(device))
+            self.decoders.add_module(Decoder().to(device))
 
     def forward(self, x):
         # x structure (B, h, w, c)
@@ -84,11 +84,3 @@ class DMPHNModel(nn.Module):
             for j in range(w_parts_num):
                 rs.append(tmp.chunk(w_parts_num,dim=2)[j])
         return rs
-    
-    def parameters(self):
-        paralist = self.encoders[0].parameters()
-        paralist.append(self.decoders[0].parameters())
-        for i in range(self.level-1):
-            paralist.append(self.encoders[i+1].parameters())
-            paralist.append(self.decoders[i+1].parameters())
-        return paralist

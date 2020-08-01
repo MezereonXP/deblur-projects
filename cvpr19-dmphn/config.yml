@@ -6,7 +6,9 @@ batch_size: 6
 solver: 'adam'
 device: 'cuda:0'
 
+
 # other settings
+mode: 'train'
 model_path: 'none'
 data_path: '/home/kxp/data/gopro/'
 save_path: '/home/kxp/workspace/deblur-projects/cvpr19-dmphn/checkpoints/'

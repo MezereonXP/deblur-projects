@@ -11,7 +11,6 @@ class DMPHNModel(nn.Module):
         for i in range(level):
             self.encoders.append(Encoder().to(device))
             self.decoders.append(Decoder().to(device))
-        self.params = nn.ParameterList([self.encoders[i].parameters() for i in range(level)]+[self.decoders[i].parameters() for i in range(level)])
 
     def forward(self, x):
         # x structure (B, h, w, c)
@@ -85,3 +84,11 @@ class DMPHNModel(nn.Module):
             for j in range(w_parts_num):
                 rs.append(tmp.chunk(w_parts_num,dim=2)[j])
         return rs
+    
+    def parameters(self):
+        paralist = self.encoders[0].parameters()
+        paralist.append(self.decoders[0].parameters())
+        for i in range(self.level-1):
+            paralist.append(self.encoders[i+1].parameters())
+            paralist.append(self.decoders[i+1].parameters())
+        return paralist

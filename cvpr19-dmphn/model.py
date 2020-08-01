@@ -30,7 +30,7 @@ class DMPHNModel(nn.Module):
                 for j in range(num_parts):
                     tmp_feature.append(self.encoder4(rs[j]))  # each feature is [B, H, W, C=128]
                 # combine the output
-                tmp_feature = self.combine(tmp_feature, comb_dim=2)
+                tmp_feature = self.combine(tmp_feature, comb_dim=3)
                 for j in range(num_parts/2):
                     tmp_out.append(self.decoder4(tmp_feature[j]))
             elif currentlevel == 2:
@@ -38,7 +38,7 @@ class DMPHNModel(nn.Module):
                 for j in len(rs):
                     rs[j] = rs[j] + tmp_out[j]
                     tmp_feature.append(self.encoder3(rs[j]))
-                tmp_feature = self.combine(tmp_feature, comb_dim=1)
+                tmp_feature = self.combine(tmp_feature, comb_dim=2)
                 for j in range(num_parts/2):
                     tmp_out.append(self.decoder3(tmp_feature[j]))
             elif currentlevel == 1:
@@ -46,7 +46,7 @@ class DMPHNModel(nn.Module):
                 for j in len(rs):
                     rs[j] = rs[j] + tmp_out[j]
                     tmp_feature.append(self.encoder2(rs[j]))
-                tmp_feature = self.combine(tmp_feature, comb_dim=2)
+                tmp_feature = self.combine(tmp_feature, comb_dim=3)
                 for j in range(num_parts/2):
                     tmp_out.append(self.decoder2(tmp_feature[j]))
             else:
@@ -54,19 +54,19 @@ class DMPHNModel(nn.Module):
                 x = self.decoder1(self.encoder1(x))
         return x
     
-    def combine(self, x, comb_dim=1):
+    def combine(self, x, comb_dim=2):
         """[将数组逐两个元素进行合并并且返回]
 
         Args:
             x ([tensor array]): [输出的tensor数组]
-            comb_dim (int, optional): [合并的维度，从高度合并则是1，宽度合并则是2]. Defaults to 1.
+            comb_dim (int, optional): [合并的维度，从高度合并则是2，宽度合并则是3]. Defaults to 2.
 
         Returns:
             [tensor array]: [合并后的数组，长度变为一半]
         """        
         rs = []
         for i in range(int(len(x)/2)):
-            rs.append(torch.cat((x[2*i], x[2*i+1]),dim=comb_dim))
+            rs.append(torch.cat((x[2*i], x[2*i+1]), dim=comb_dim))
         return rs
 
     def divide(self, x, h_parts_num, w_parts_num):
@@ -74,16 +74,16 @@ class DMPHNModel(nn.Module):
             这里直接针对多维数组进行操作
 
         Args:
-            x (Torch Tensor): input torch tensor (e.g. [Batchsize, Heights, Width, Channels])
+            x (Torch Tensor): input torch tensor (e.g. [Batchsize, Channels, Heights, Width])
             h_parts_num (int): The number of divided parts on heights
             w_parts_num (int): The number of divided parts on width
 
         Returns:
-            [A list]: h_parts_num x w_parts_num 's tensor list, each one has [B, H/h_parts_num, W/w_parts_num, Channels] structure
+            [A list]: h_parts_num x w_parts_num 's tensor list, each one has [B, Channels, H/h_parts_num, W/w_parts_num] structure
         """                
         rs = []
         for i in range(h_parts_num):
-            tmp = x.chunk(h_parts_num, dim=1)[i]
+            tmp = x.chunk(h_parts_num, dim=2)[i]
             for j in range(w_parts_num):
-                rs.append(tmp.chunk(w_parts_num,dim=2)[j])
+                rs.append(tmp.chunk(w_parts_num,dim=3)[j])
         return rs

@@ -4,9 +4,9 @@ import os
 import torchvision.transforms as transforms
 
 my_transform = transforms.Compose([
-                    # transforms.RandomCrop((256,256)),
-                    transforms.Normalize(0.5, 1),     
+                    # transforms.RandomCrop((256,256)),     
                     transforms.ToTensor(),
+                    transforms.Normalize(0.5, 1),
                 ])
 
 def rand_crop(data, label, img_h, img_w):

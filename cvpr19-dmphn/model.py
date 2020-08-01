@@ -38,21 +38,23 @@ class DMPHNModel(nn.Module):
                 rs = self.divide(x, 2, 2)
                 for j in range(len(rs)):
                     rs[j] = rs[j] + tmp_out[j]
-                    tmp_feature.append(self.encoder3(rs[j]))
+                    tmp_feature[j] = tmp_feature[j] + self.encoder3(rs[j])
                 tmp_feature = self.combine(tmp_feature, comb_dim=2)
+                tmp_out = []
                 for j in range(int(num_parts/2)):
                     tmp_out.append(self.decoder3(tmp_feature[j]))
             elif currentlevel == 1:
                 rs = self.divide(x, 1, 2)
                 for j in range(len(rs)):
                     rs[j] = rs[j] + tmp_out[j]
-                    tmp_feature.append(self.encoder2(rs[j]))
+                    tmp_feature[j] = tmp_feature[j] + self.encoder2(rs[j])
                 tmp_feature = self.combine(tmp_feature, comb_dim=3)
+                tmp_out = []
                 for j in range(int(num_parts/2)):
                     tmp_out.append(self.decoder2(tmp_feature[j]))
             else:
-                x += tmp_feature[0]
-                x = self.decoder1(self.encoder1(x))
+                x += tmp_out[0]
+                x = self.decoder1(self.encoder1(x)+tmp_feature[0])
         return x
     
     def combine(self, x, comb_dim=2):

@@ -1,4 +1,4 @@
-from torch.utils.data import DateSet
+from torch.utils.data import Dataset
 from PIL import Image
 import os
 import torchvision.transforms as transforms
@@ -18,7 +18,7 @@ def rand_crop(data, label, img_h, img_w):
     label = label.crop((width1, height1, width2, height2))
     return data,label
 
-class GoProDataset(DateSet):
+class GoProDataset(Dateset):
     def __init__(self, path, mode='train'):
         super(self).__init__()
         self.inputs = []

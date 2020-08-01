@@ -7,7 +7,7 @@ import random
 my_transform = transforms.Compose([
                     # transforms.RandomCrop((256,256)),     
                     transforms.ToTensor(),
-                    transforms.Normalize(0.5, 1),
+                    transforms.Normalize((0.5,0.5,0.5), (1,1,1)),
                 ])
 
 def rand_crop(data, label, img_h, img_w):

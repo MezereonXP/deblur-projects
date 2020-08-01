@@ -73,7 +73,7 @@ def run():
             by = batch_y[0].unsqueeze(0)
             grid_data = torch.cat((torch.cat((bx,by),dim=0),bo),dim=0)
             img_grid = vutils.make_grid(grid_data, normalize=True)
-            writer.add_image('output', kernel_grid, global_step=i) 
+            writer.add_image('output', img_grid, global_step=i) 
         if (epoch+1)%100 == 0:
             print("Saving model......")
             torch.save(model, config.save_path+"/"+config.save_name)

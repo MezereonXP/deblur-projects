@@ -36,7 +36,7 @@ class DMPHNModel(nn.Module):
                     tmp_out.append(self.decoder4(tmp_feature[j]))
             elif currentlevel == 2:
                 rs = self.divide(x, 2, 2)
-                for j in len(rs):
+                for j in range(len(rs)):
                     rs[j] = rs[j] + tmp_out[j]
                     tmp_feature.append(self.encoder3(rs[j]))
                 tmp_feature = self.combine(tmp_feature, comb_dim=2)
@@ -44,7 +44,7 @@ class DMPHNModel(nn.Module):
                     tmp_out.append(self.decoder3(tmp_feature[j]))
             elif currentlevel == 1:
                 rs = self.divide(x, 1, 2)
-                for j in len(rs):
+                for j in range(len(rs)):
                     rs[j] = rs[j] + tmp_out[j]
                     tmp_feature.append(self.encoder2(rs[j]))
                 tmp_feature = self.combine(tmp_feature, comb_dim=3)

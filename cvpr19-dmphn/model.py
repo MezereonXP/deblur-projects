@@ -5,12 +5,15 @@ from encoder import Encoder
 class DMPHNModel(nn.Module):
     def __init__(self, level=4, device='cuda'):
         super(DMPHNModel, self).__init__()
-        self.encoders = nn.ModuleList()
-        self.decoders = nn.ModuleList()
+        self.encoder1 = Encoder().to(device)
+        self.decoder1 = Decoder().to(device)
+        self.encoder2 = Encoder().to(device)
+        self.decoder2 = Decoder().to(device)
+        self.encoder3 = Encoder().to(device)
+        self.decoder3 = Decoder().to(device)
+        self.encoder4 = Encoder().to(device)
+        self.decoder4 = Decoder().to(device)
         self.level = level
-        for i in range(level):
-            self.encoders.add_module(Encoder().to(device))
-            self.decoders.add_module(Decoder().to(device))
 
     def forward(self, x):
         # x structure (B, h, w, c)
@@ -25,30 +28,30 @@ class DMPHNModel(nn.Module):
             if currentlevel == 3:
                 rs = self.divide(x, 2, 4)
                 for j in range(num_parts):
-                    tmp_feature.append(self.Encoder[currentlevel](rs[j]))  # each feature is [B, H, W, C=128]
+                    tmp_feature.append(self.encoder4(rs[j]))  # each feature is [B, H, W, C=128]
                 # combine the output
                 tmp_feature = self.combine(tmp_feature, comb_dim=2)
                 for j in range(num_parts/2):
-                    tmp_out.append(self.Decoder[currentlevel](tmp_feature[j]))
+                    tmp_out.append(self.decoder4(tmp_feature[j]))
             elif currentlevel == 2:
                 rs = self.divide(x, 2, 2)
                 for j in len(rs):
                     rs[j] = rs[j] + tmp_out[j]
-                    tmp_feature.append(self.Encoder[currentlevel](rs[j]))
+                    tmp_feature.append(self.encoder3(rs[j]))
                 tmp_feature = self.combine(tmp_feature, comb_dim=1)
                 for j in range(num_parts/2):
-                    tmp_out.append(self.Decoder[currentlevel](tmp_feature[j]))
+                    tmp_out.append(self.decoder3(tmp_feature[j]))
             elif currentlevel == 1:
                 rs = self.divide(x, 1, 2)
                 for j in len(rs):
                     rs[j] = rs[j] + tmp_out[j]
-                    tmp_feature.append(self.Encoder[currentlevel](rs[j]))
+                    tmp_feature.append(self.encoder2(rs[j]))
                 tmp_feature = self.combine(tmp_feature, comb_dim=2)
                 for j in range(num_parts/2):
-                    tmp_out.append(self.Decoder[currentlevel](tmp_feature[j]))
+                    tmp_out.append(self.decoder2(tmp_feature[j]))
             else:
                 x += tmp_feature[0]
-                x = self.Decoder[currentlevel](self.Encoder[currentlevel](x))
+                x = self.decoder1(self.encoder1(x))
         return x
     
     def combine(self, x, comb_dim=1):

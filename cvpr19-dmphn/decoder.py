@@ -18,7 +18,7 @@ class Decoder(nn.Module):
         self.conv10 = nn.Conv2d(32, 32, kernel_size=3, padding=1, stride=1)
         self.conv11 = nn.Conv2d(32, 32, kernel_size=3, padding=1, stride=1)
         self.conv12 = nn.Conv2d(32, 32, kernel_size=3, padding=1, stride=1)
-        self.conv13 = nn.Conv2d(32, 32, kernel_size=3, padding=1, stride=1)
+        self.conv13 = nn.Conv2d(32, 3, kernel_size=3, padding=1, stride=1)
     
     def forward(self, x):
         tmp = x

@@ -51,7 +51,7 @@ def run():
 
     epoches = int(config.epoch)
 
-    for epoch in epoches:
+    for epoch in range(epoches):
         i = 0
         for batch_x, batch_y in mydataloader:
             i += 1

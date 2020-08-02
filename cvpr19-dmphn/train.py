@@ -26,6 +26,9 @@ def run():
     decay_rate = float(config.decay_rate)
     batch_size = int(config.batch_size)
     optim_type = config.solver
+    save_path_with_name = config.save_path+"/"+config.save_name
+    if not os.path.exists(config.save_path):
+        os.makedirs(config.save_path)
 
     # Load Model
     model = DMPHNModel(level=4, device=device).to(device)

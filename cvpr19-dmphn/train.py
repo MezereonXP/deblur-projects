@@ -73,8 +73,8 @@ def run():
             # Write the scalar
             writer.add_scalar('loss', loss, i)
             bx = batch_x[0].unsqueeze(0)
-            bo = batch_out[0].unsqueeze(0)
-            by = batch_y[0] + 0.5  # Un-normalization
+            bo = batch_out[0].unsqueeze(0) + 0.5  # Un-normalization
+            by = batch_y[0].unsqueeze(0)
             # print(by[0])
             grid_data = torch.cat((bx,by),dim=0)
             img_grid = vutils.make_grid(grid_data, normalize=True)

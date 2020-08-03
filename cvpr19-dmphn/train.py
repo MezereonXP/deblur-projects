@@ -54,32 +54,31 @@ def run():
 
     epoches = int(config.epoch)
 
-    i = 0
     for epoch in range(epoches):
-        
+        training_loss = 0
         for batch_x, batch_y in mydataloader:
-            i += 1
             batch_x, batch_y = batch_x.to(device), batch_y.to(device)
-            optimizer.zero_grad()
             # forward
             # print(batch_x.shape)
             batch_out = model(batch_x)
             loss = mse_loss(batch_out, batch_y)
+            training_loss += loss.data[0]
             # backward
+            optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            print('Epoch:{}|num:{}|loss:{}'.format(epoch, i, loss))
 
-            # Write the scalar
-            writer.add_scalar('loss', loss, i)
-            bx = batch_x[0].unsqueeze(0)
-            bo = batch_out[0] + 0.5  # Un-normalization
-            by = batch_y[0].unsqueeze(0)
-            # print(by[0])
-            grid_data = torch.cat((bx,by),dim=0)
-            img_grid = vutils.make_grid(grid_data, normalize=True)
-            writer.add_image('input', img_grid, global_step=i)
-            writer.add_image('output', bo, global_step=i) 
+        # Write the scalar
+        writer.add_scalar('loss', training_loss/len(dataset), epoch)
+        bx = batch_x[0].unsqueeze(0)
+        bo = batch_out[0] + 0.5  # Un-normalization
+        by = batch_y[0].unsqueeze(0)
+        # print(by[0])
+        grid_data = torch.cat((bx,by),dim=0)
+        img_grid = vutils.make_grid(grid_data, normalize=True)
+        writer.add_image('input', img_grid, global_step=i)
+        writer.add_image('output', bo, global_step=i) 
+        print('Epoch:{}|loss:{}'.format(epoch, training_loss/len(dataset)))
         if (epoch+1)%100 == 0:
             print("Saving model......")
             torch.save(model, config.save_path+"/"+config.save_name)

@@ -23,23 +23,23 @@ class Encoder(nn.Module):
     def forward(self, x):
         tmp = self.conv1(x)
         x1 = F.relu(self.conv2(tmp))
-        x1 = x1 + tmp  # residual link
-        tmp = self.conv3(x1)
+        x1 = self.conv3(x1)
+        tmp = x1 + tmp  # residual link
         x1 = F.relu(self.conv4(tmp))
-        x1 = x1 + tmp  # residual link
         x1 = self.conv5(x1)
+        x1 = x1 + tmp  # residual link
         tmp = self.conv6(x1)
         x1 = F.relu(self.conv7(tmp))
-        x1 = x1 + tmp  # residual link
-        tmp = self.conv8(x1)
+        x1 = self.conv8(x1)
+        tmp = x1 + tmp  # residual link
         x1 = F.relu(self.conv9(tmp))
-        x1 = x1 + tmp  # residual link
         x1 = self.conv10(x1)
+        x1 = x1 + tmp  # residual link
         tmp = self.conv11(x1)
         x1 = F.relu(self.conv12(tmp))
-        x1 = x1 + tmp  # residual link
-        tmp = self.conv13(x1)
+        x1 = self.conv13(x1)
+        tmp = x1 + tmp  # residual link
         x1 = F.relu(self.conv14(tmp))
-        x1 = x1 + tmp  # residual link
         x1 = self.conv15(x1)
+        x1 = x1 + tmp  # residual link
         return x1

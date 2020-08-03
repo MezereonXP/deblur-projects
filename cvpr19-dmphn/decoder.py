@@ -23,23 +23,23 @@ class Decoder(nn.Module):
     def forward(self, x):
         tmp = x
         x1 = F.relu(self.conv1(tmp))
-        x1 = x1 + tmp  # residual link
-        tmp = self.conv2(x1)
+        x1 = self.conv2(x1)
+        tmp = x1 + tmp  # residual link
         x1 = F.relu(self.conv3(tmp))
-        x1 = x1 + tmp  # residual link
         x1 = self.conv4(x1)
+        x1 = x1 + tmp  # residual link
         tmp = self.deconv1(x1)
         x1 = F.relu(self.conv5(tmp))
-        x1 = x1 + tmp  # residual link
-        tmp = self.conv6(x1)
+        x1 = self.conv6(x1)
+        tmp = x1 + tmp  # residual link
         x1 = F.relu(self.conv7(tmp))
-        x1 = x1 + tmp  # residual link
         x1 = self.conv8(x1)
+        x1 = x1 + tmp  # residual link
         tmp = self.deconv2(x1)
-        x1 = F.relu(self.conv9(tmp))
-        x1 = x1 + tmp  # residual link
-        tmp = self.conv10(x1)
+        x1 = F.relu(self.conv9(tmp))        
+        x1 = self.conv10(x1)
+        tmp = x1 + tmp  # residual link
         x1 = F.relu(self.conv11(tmp))
-        x1 = x1 + tmp  # residual link
         x1 = self.conv12(x1)
+        x1 = x1 + tmp  # residual link
         return self.conv13(x1)

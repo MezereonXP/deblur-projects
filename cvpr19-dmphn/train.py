@@ -70,20 +70,18 @@ def run():
             loss.backward()
             optimizer.step()
 
-            # bo = batch_out[0] + 0.5  # Un-normalization
-            # print(bo)
-
             # Write the scalar
             writer.add_scalar('loss', loss.data.item(), i)
             bx = batch_x[0].unsqueeze(0)
-            bo = batch_out[0] + 0.5  # Un-normalization
+            bo = batch_out[0]
             by = batch_y[0].unsqueeze(0)
-            print(bo)
-            grid_data = torch.cat((bx,by),dim=0)
+            # print(bo)
+            grid_data = torch.cat((torch.cat((bx,by),dim=0),bo),dim=0)
             img_grid = vutils.make_grid(grid_data, normalize=True)
-            writer.add_image('input', img_grid, global_step=i)
-            writer.add_image('output', bo, global_step=i) 
-            print('Epoch:{}|loss:{}'.format(epoch, loss.data.item()))
+            writer.add_image('image', img_grid, global_step=i)
+            # writer.add_image('output', bo, global_step=i) 
+            print('Epoch:{}|num:{}|loss:{}'.format(epoch, i, loss.data.item()))
+        writer.add_scalar('global loss', training_loss/len(dataset), epoch)
         if (epoch+1)%100 == 0:
             print("Saving model......")
             torch.save(model, config.save_path+"/"+config.save_name)

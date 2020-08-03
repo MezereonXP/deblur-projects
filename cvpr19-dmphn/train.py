@@ -68,6 +68,9 @@ def run():
             loss.backward()
             optimizer.step()
 
+            bo = batch_out[0] + 0.5  # Un-normalization
+            print(bo)
+
         # Write the scalar
         writer.add_scalar('loss', training_loss/len(dataset), epoch)
         bx = batch_x[0].unsqueeze(0)

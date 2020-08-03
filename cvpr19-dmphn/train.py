@@ -84,9 +84,9 @@ def run():
             writer.add_image('input', img_grid, global_step=i)
             writer.add_image('output', bo, global_step=i) 
             print('Epoch:{}|loss:{}'.format(epoch, training_loss/len(dataset)))
-            if (epoch+1)%100 == 0:
-                print("Saving model......")
-                torch.save(model, config.save_path+"/"+config.save_name)
+        if (epoch+1)%100 == 0:
+            print("Saving model......")
+            torch.save(model, config.save_path+"/"+config.save_name)
 
 if __name__ == "__main__":
     run()

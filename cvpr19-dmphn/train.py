@@ -76,8 +76,8 @@ def run():
         # print(by[0])
         grid_data = torch.cat((bx,by),dim=0)
         img_grid = vutils.make_grid(grid_data, normalize=True)
-        writer.add_image('input', img_grid, global_step=i)
-        writer.add_image('output', bo, global_step=i) 
+        writer.add_image('input', img_grid, global_step=epoch)
+        writer.add_image('output', bo, global_step=epoch) 
         print('Epoch:{}|loss:{}'.format(epoch, training_loss/len(dataset)))
         if (epoch+1)%100 == 0:
             print("Saving model......")

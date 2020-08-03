@@ -43,7 +43,7 @@ def run():
         optimizer = optim.SGD(model.parameters(), lr=lr, weight_decay=decay_rate)
     
     # Loss Setting
-    mse_loss = torch.nn.MSELoss()
+    mse_loss = torch.nn.MSELoss(reduction = 'sum')
 
     # Tensorboard Setting
     writer = SummaryWriter('./tensorboard_history')

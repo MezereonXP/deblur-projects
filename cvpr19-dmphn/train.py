@@ -73,7 +73,7 @@ def run():
             # Write the scalar
             writer.add_scalar('loss', loss.data.item(), i)
             bx = batch_x[0].unsqueeze(0)
-            bo = batch_out[0]
+            bo = batch_out[0].unsqueeze(0)
             by = batch_y[0].unsqueeze(0)
             # print(bo)
             grid_data = torch.cat((torch.cat((bx,by),dim=0),bo),dim=0)

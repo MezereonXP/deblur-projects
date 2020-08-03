@@ -9,7 +9,7 @@ device: 'cuda:0'
 
 # other settings
 mode: 'train'
-model_path: 'none'
+model_path: '/home/kxp/workspace/deblur-projects/cvpr19-dmphn/checkpoints/001_lr_1e-4_deblur.pth'
 data_path: '/home/kxp/data/gopro/'
 save_path: '/home/kxp/workspace/deblur-projects/cvpr19-dmphn/checkpoints/'
 save_name: '001_lr_1e-4_deblur.pth'

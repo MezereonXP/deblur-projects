@@ -75,6 +75,7 @@ def run():
             bx = batch_x[0].unsqueeze(0)
             bo = batch_out[0].unsqueeze(0)
             by = batch_y[0].unsqueeze(0)
+            print(by[0])
             grid_data = torch.cat((torch.cat((bx,by),dim=0),bo),dim=0)
             img_grid = vutils.make_grid(grid_data, normalize=True)
             writer.add_image('output', img_grid, global_step=i) 

@@ -74,7 +74,7 @@ def run():
             # print(bo)
 
             # Write the scalar
-            writer.add_scalar('loss', training_loss/len(dataset), epoch)
+            writer.add_scalar('loss', training_loss/len(dataset), i)
             bx = batch_x[0].unsqueeze(0)
             bo = batch_out[0] + 0.5  # Un-normalization
             by = batch_y[0].unsqueeze(0)

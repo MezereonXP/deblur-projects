@@ -56,9 +56,9 @@ def run():
 
     i = 0
     for epoch in range(epoches):
-        i += 1
         training_loss = 0
         for batch_x, batch_y in mydataloader:
+            i += 1
             batch_x, batch_y = batch_x.to(device), batch_y.to(device)
             # forward
             # print(batch_x.shape)

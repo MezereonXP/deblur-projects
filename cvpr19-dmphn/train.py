@@ -74,7 +74,7 @@ def run():
             # print(bo)
 
             # Write the scalar
-            writer.add_scalar('loss', training_loss/len(dataset), i)
+            writer.add_scalar('loss', loss.data.item(), i)
             bx = batch_x[0].unsqueeze(0)
             bo = batch_out[0] + 0.5  # Un-normalization
             by = batch_y[0].unsqueeze(0)
@@ -83,7 +83,7 @@ def run():
             img_grid = vutils.make_grid(grid_data, normalize=True)
             writer.add_image('input', img_grid, global_step=i)
             writer.add_image('output', bo, global_step=i) 
-            print('Epoch:{}|loss:{}'.format(epoch, training_loss/len(dataset)))
+            print('Epoch:{}|loss:{}'.format(epoch, loss.data.item()))
         if (epoch+1)%100 == 0:
             print("Saving model......")
             torch.save(model, config.save_path+"/"+config.save_name)

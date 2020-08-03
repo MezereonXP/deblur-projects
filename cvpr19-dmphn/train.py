@@ -62,7 +62,7 @@ def run():
             # print(batch_x.shape)
             batch_out = model(batch_x)
             loss = mse_loss(batch_out, batch_y)
-            training_loss += loss.data[0]
+            training_loss += loss.data.item()
             # backward
             optimizer.zero_grad()
             loss.backward()

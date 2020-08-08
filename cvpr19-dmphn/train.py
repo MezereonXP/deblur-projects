@@ -69,18 +69,18 @@ def run():
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-
-            # Write the scalar
-            writer.add_scalar('loss', loss.data.item(), i)
-            bx = batch_x[0].unsqueeze(0)
-            bo = batch_out[0].unsqueeze(0)
-            by = batch_y[0].unsqueeze(0)
-            # print(bo)
-            grid_data = torch.cat((torch.cat((bx,by),dim=0),bo),dim=0)
-            img_grid = vutils.make_grid(grid_data, normalize=True)
-            writer.add_image('image', img_grid, global_step=i)
             # writer.add_image('output', bo, global_step=i) 
+            # writer.add_scalar('loss', loss.data.item(), i)
             print('Epoch:{}|num:{}|loss:{}'.format(epoch, i, loss.data.item()))
+    
+        # Write the scalar
+        bx = batch_x[0].unsqueeze(0)
+        bo = batch_out[0].unsqueeze(0)
+        by = batch_y[0].unsqueeze(0)
+        # print(bo)
+        grid_data = torch.cat((torch.cat((bx,by),dim=0),bo),dim=0)
+        img_grid = vutils.make_grid(grid_data, normalize=True)
+        writer.add_image('image', img_grid, global_step=epoch)
         writer.add_scalar('global loss', training_loss/len(dataset), epoch)
         if (epoch+1)%100 == 0:
             print("Saving model......")

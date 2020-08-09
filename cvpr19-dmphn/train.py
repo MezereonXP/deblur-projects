@@ -102,8 +102,8 @@ def run():
 
 def divide(input_img):
     block = []
-    height = input_img.shape()[1]
-    width = input_img.shape()[2]
+    height = input_img.shape[1]
+    width = input_img.shape[2]
     flag_h = 0 if height%256 == 0 else 1
     flag_w = 0 if width%256 == 0 else 1
     for i in range(int(height/256)+flag_h):

@@ -119,9 +119,9 @@ def divide(input_img):
                 w_end = width
                 w_start = -256
             if len(block) == 0:
-                block = input_img[:][h_start:h_end][w_start:w_end].unsqueeze(0)
+                block = input_img[:,h_start:h_end,w_start:w_end].unsqueeze(0)
             else:
-                tmp = input_img[:][h_start:h_end][w_start:w_end].unsqueeze(0)
+                tmp = input_img[:,h_start:h_end,w_start:w_end].unsqueeze(0)
                 print(tmp.shape)
                 print(block.shape)
                 block = torch.cat((block, tmp), dim=0)
@@ -144,7 +144,7 @@ def combine(imgs, w, h):
                 w_end = width
                 w_start = -256
             
-            result[:][h_start:h_end][w_start:w_end] = imgs[i*(int(w/256)+flag_h)+j][:][:][:]
+            result[:,h_start:h_end,w_start:w_end] = imgs[i*(int(w/256)+flag_h)+j,:,:,:]
     return result
 
 def run_test(config, model):

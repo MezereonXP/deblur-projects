@@ -49,7 +49,6 @@ def run():
     if mode == 'test':
         model = model.eval()
         run_test(config, model)
-        exit
 
     # Optimization Setting
     optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=decay_rate)
@@ -129,7 +128,7 @@ def combine(imgs, w, h):
     result = torch.zeros(3, h, w)
     flag_h = 0 if h%256 == 0 else 1
     flag_w = 0 if w%256 == 0 else 1
-    print("Combin h:{}, w:{}".format(int(h/256)+flag_h, int(w/256)+flag_w))
+    # print("Combin h:{}, w:{}".format(int(h/256)+flag_h, int(w/256)+flag_w))
     for i in range(int(h/256)+flag_h):
         for j in range(int(w/256)+flag_w):
             h_start = i*256
@@ -166,7 +165,7 @@ def run_test(config, model):
         output_img = combine(outputs, width, height)
         vutils.save_image(output_img, output_path+'/'+output_name, normalize=True)
         print('Saved Result in {}'.format(output_path))
-
+        exit(0)
 
 
 if __name__ == "__main__":

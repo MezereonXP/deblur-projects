@@ -122,8 +122,6 @@ def divide(input_img):
                 block = input_img[:,h_start:h_end,w_start:w_end].unsqueeze(0)
             else:
                 tmp = input_img[:,h_start:h_end,w_start:w_end].unsqueeze(0)
-                print(tmp.shape)
-                print(block.shape)
                 block = torch.cat((block, tmp), dim=0)
     return block, width, height
 
@@ -156,7 +154,7 @@ def run_test(config, model):
     input_img = my_transform(input_img)
     # Divide into multi 256x256 blocks
     blocks, width, height = divide(input_img)
-    outputs = model(blocks)
+    outputs = model(blocks.to(config.device))
     output_img = combine(outputs, width, height)
     vutils.save_image(output_img, output_path+'/'+output_name, normalize=True)
     print('Saved Result in {}'.format(output_path))

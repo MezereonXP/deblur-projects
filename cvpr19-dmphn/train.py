@@ -122,6 +122,8 @@ def divide(input_img):
                 block = input_img[:][h_start:h_end][w_start:w_end].unsqueeze(0)
             else:
                 tmp = input_img[:][h_start:h_end][w_start:w_end].unsqueeze(0)
+                print(tmp.shape)
+                print(block.shape)
                 block = torch.cat((block, tmp), dim=0)
     return block, width, height
 

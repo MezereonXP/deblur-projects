@@ -156,14 +156,15 @@ def run_test(config, model):
     blocks, width, height = divide(input_img)
     blocks = blocks.to(config.device)
     outputs = []
-    for i in range(blocks.shape[0]):
-        if len(outputs) == 0:
-            outputs = model(blocks[i].unsqueeze(0))
-        else:
-            outputs = torch.cat((outputs, model(blocks[i].unsqueeze(0))))
-    output_img = combine(outputs, width, height)
-    vutils.save_image(output_img, output_path+'/'+output_name, normalize=True)
-    print('Saved Result in {}'.format(output_path))
+    with torch.no_grad():
+        for i in range(blocks.shape[0]):
+            if len(outputs) == 0:
+                outputs = model(blocks[i].unsqueeze(0))
+            else:
+                outputs = torch.cat((outputs, model(blocks[i].unsqueeze(0))))
+        output_img = combine(outputs, width, height)
+        vutils.save_image(output_img, output_path+'/'+output_name, normalize=True)
+        print('Saved Result in {}'.format(output_path))
 
 
 

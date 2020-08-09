@@ -49,6 +49,7 @@ def run():
     if mode == 'test':
         model = model.eval()
         run_test(config, model)
+        # exit(0)
 
     # Optimization Setting
     optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=decay_rate)

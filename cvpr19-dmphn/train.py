@@ -154,7 +154,13 @@ def run_test(config, model):
     input_img = my_transform(input_img)
     # Divide into multi 256x256 blocks
     blocks, width, height = divide(input_img)
-    outputs = model(blocks.to(config.device))
+    blocks = blocks.to(config.device)
+    outputs = []
+    for i in range(blocks.shape[0]):
+        if len(outputs) == 0:
+            outputs = model(blocks[i].unsqueeze(0))
+        else:
+            outputs = torch.cat((outputs, model(blocks[i].unsqueeze(0))))
     output_img = combine(outputs, width, height)
     vutils.save_image(output_img, output_path+'/'+output_name, normalize=True)
     print('Saved Result in {}'.format(output_path))

@@ -135,11 +135,11 @@ def combine(imgs, w, h):
             h_end = (i+1)*256
             w_start = j*256
             w_end = (j+1)*256
-            if h_end > height:
-                h_end = height
+            if h_end > h:
+                h_end = h
                 h_start = -256
-            if w_end > width:
-                w_end = width
+            if w_end > w:
+                w_end = w
                 w_start = -256
             
             result[:,h_start:h_end,w_start:w_end] = imgs[i*(int(w/256)+flag_h)+j,:,:,:]

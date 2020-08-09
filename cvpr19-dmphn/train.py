@@ -100,7 +100,7 @@ def run():
             print("Saving model......")
             torch.save(model, config.save_path+"/"+config.save_name)
 
-def divide(img):
+def divide(input_img):
     block = []
     height = input_img.shape()[1]
     width = input_img.shape()[2]

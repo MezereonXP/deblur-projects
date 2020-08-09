@@ -129,6 +129,7 @@ def combine(imgs, w, h):
     result = torch.zeros(3, h, w)
     flag_h = 0 if h%256 == 0 else 1
     flag_w = 0 if w%256 == 0 else 1
+    print("Combin h:{}, w:{}".format(int(h/256)+flag_h, int(w/256)+flag_w))
     for i in range(int(h/256)+flag_h):
         for j in range(int(w/256)+flag_w):
             h_start = i*256
@@ -142,7 +143,7 @@ def combine(imgs, w, h):
                 w_end = w
                 w_start = -256
             
-            result[:,h_start:h_end,w_start:w_end] = imgs[i*(int(w/256)+flag_h)+j,:,:,:]
+            result[:,h_start:h_end,w_start:w_end] = imgs[i*(int(w/256)+flag_w)+j,:,:,:]
     return result
 
 def run_test(config, model):

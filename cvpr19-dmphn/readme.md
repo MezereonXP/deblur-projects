@@ -26,21 +26,33 @@ Here are some tips about the config file:
 - lr: 1e-4  
 - decay_rate: 0.1
 - batch_size: 6
-- solver: 'adam'
-- device: 'cuda:0'
+- solver: 
+    - 'adam'
+    - 'sgd'
+- device: 
+    - 'cuda:0'
+    - 'cpu'
 
 #### other settings
-- mode: 'train'
-- model_path: '/home/yourname/workspace/deblur-projects/cvpr19-dmphn/checkpoints/002_lr_1e-4_deblur.pth'
-- model_path: 'none' **for the first training**
+- mode: 
+    - 'train'
+    - 'test'
+- model_path: 
+    - '.../checkpoints/002_lr_1e-4_deblur.pth'
+    - 'none' **for the first training**
 - data_path: '/home/yourname/data/gopro/'
 - save_path: '/home/yourname/workspace/deblur-projects/cvpr19-dmphn/checkpoints/'
 - save_name: '002_lr_1e-4_deblur.pth'
 
+#### GoPro Dataset
+
+You could download the GoPro dataset at [link](https://github.com/SeungjunNah/DeepDeblur_release)
 
 You have to change some paths which are related to the dataset or checkpoints.
 
 > I will release the pre-trained model in the future.
+
+-------
 
 After preparing all the setting, you can simply call:
 ```shell

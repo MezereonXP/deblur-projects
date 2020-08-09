@@ -17,7 +17,7 @@ class DMPHNModel(nn.Module):
         self.level = level
 
     def forward(self, x):
-        # x structure (B, h, w, c)
+        # x structure (B, C, H, W)
         # from bottom to top
         tmp_out = []
         tmp_feature = []

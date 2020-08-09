@@ -14,3 +14,8 @@ model_path: '/home/kxp/workspace/deblur-projects/cvpr19-dmphn/checkpoints/002_lr
 data_path: '/home/kxp/data/gopro/'
 save_path: '/home/kxp/workspace/deblur-projects/cvpr19-dmphn/checkpoints/'
 save_name: '002_lr_1e-4_deblur.pth'
+
+# test settings (mode = 'test')
+test_img_path: './test.jpg'
+output_path: './output'
+output_name: 'output.jpg'

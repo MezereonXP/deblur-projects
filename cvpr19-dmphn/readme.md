@@ -50,7 +50,12 @@ You could download the GoPro dataset at [link](https://github.com/SeungjunNah/De
 
 You have to change some paths which are related to the dataset or checkpoints.
 
-> I will release the pre-trained model in the future.
+
+#### Pretrained Model
+
+I have uploaded my trained model to google drive. You could download by this [link](https://drive.google.com/file/d/1PqPwEmEru5NJcbEub6qd5ErDGrRdCKVx/view?usp=sharing)
+
+This model is trained through 3000 epoches with the 1e-4 learning rate.
 
 -------
 

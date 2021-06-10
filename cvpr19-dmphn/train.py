@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.utils as vutils
 
+from tqdm import tqdm
 import yaml
 import os
 from easydict import EasyDict as edict
@@ -151,22 +152,50 @@ def run_test(config, model):
     output_path = config.output_path
     output_name = config.output_name
     
-    input_img = Image.open(test_img_path).convert('RGB')
-    input_img = my_transform(input_img)
-    # Divide into multi 256x256 blocks
-    blocks, width, height = divide(input_img)
-    blocks = blocks.to(config.device)
-    outputs = []
-    with torch.no_grad():
-        for i in range(blocks.shape[0]):
-            if len(outputs) == 0:
-                outputs = model(blocks[i].unsqueeze(0))
-            else:
-                outputs = torch.cat((outputs, model(blocks[i].unsqueeze(0))))
-        output_img = combine(outputs, width, height)
-        vutils.save_image(output_img, output_path+'/'+output_name, normalize=True)
-        print('Saved Result in {}'.format(output_path))
+    if os.path.isdir(test_img_path):
+        img_list = os.listdir(test_img_path)
+        pbar = tqdm(total=len(img_list))
+
+        for img_file in img_list:
+            pbar.update(1)
+            output_name = img_file
+
+            input_img = Image.open("{}/{}".format(test_img_path, img_file)).convert('RGB')
+            input_img = my_transform(input_img)
+            # Divide into multi 256x256 blocks
+            blocks, width, height = divide(input_img)
+            blocks = blocks.to(config.device)
+            outputs = []
+            with torch.no_grad():
+                for i in range(blocks.shape[0]):
+                    if len(outputs) == 0:
+                        outputs = model(blocks[i].unsqueeze(0))
+                    else:
+                        outputs = torch.cat((outputs, model(blocks[i].unsqueeze(0))))
+                output_img = combine(outputs, width, height)
+                vutils.save_image(output_img, output_path+'/'+output_name, normalize=True)
+                # print('Saved Result in {}'.format(output_path))
+        
+        pbar.close()
         exit(0)
+
+    else:
+        input_img = Image.open(test_img_path).convert('RGB')
+        input_img = my_transform(input_img)
+        # Divide into multi 256x256 blocks
+        blocks, width, height = divide(input_img)
+        blocks = blocks.to(config.device)
+        outputs = []
+        with torch.no_grad():
+            for i in range(blocks.shape[0]):
+                if len(outputs) == 0:
+                    outputs = model(blocks[i].unsqueeze(0))
+                else:
+                    outputs = torch.cat((outputs, model(blocks[i].unsqueeze(0))))
+            output_img = combine(outputs, width, height)
+            vutils.save_image(output_img, output_path+'/'+output_name, normalize=True)
+            print('Saved Result in {}'.format(output_path))
+            exit(0)
 
 
 if __name__ == "__main__":
